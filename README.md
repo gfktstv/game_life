@@ -1,4 +1,4 @@
-# Game "Life" is a task in my CS class
+# Game "Life"
 ### **There is requirements for the game in English (in Russian listed below)**
 It is required to write a program that simulates the life of animals:
 
