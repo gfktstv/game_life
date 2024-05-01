@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="10cf3431-ba18-4300-b661-f7959a033512" name="Changes" comment="Emulation created&#10;Notice that method reproduce() works only for plants">
+    <list default="true" id="10cf3431-ba18-4300-b661-f7959a033512" name="Changes" comment="Bug fixes&#10;In previous version method 'occupy_cell()' does not work properly because it does not create a list for 2 or more creatures. Therefore, there were no reproduction and fights. Also, some minor changes were contributed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -81,7 +81,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714497755676</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Bug fixes&#10;In previous version method 'occupy_cell()' does not work properly because it does not create a list for 2 or more creatures. Therefore, there were no reproduction and fights. Also, some minor changes were contributed">
+      <option name="closed" value="true" />
+      <created>1714578962466</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1714578962466</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -99,6 +107,7 @@
     <MESSAGE value="Repository created" />
     <MESSAGE value="World generation is completed" />
     <MESSAGE value="Emulation created&#10;Notice that method reproduce() works only for plants" />
-    <option name="LAST_COMMIT_MESSAGE" value="Emulation created&#10;Notice that method reproduce() works only for plants" />
+    <MESSAGE value="Bug fixes&#10;In previous version method 'occupy_cell()' does not work properly because it does not create a list for 2 or more creatures. Therefore, there were no reproduction and fights. Also, some minor changes were contributed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes&#10;In previous version method 'occupy_cell()' does not work properly because it does not create a list for 2 or more creatures. Therefore, there were no reproduction and fights. Also, some minor changes were contributed" />
   </component>
 </project>
