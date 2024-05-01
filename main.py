@@ -121,15 +121,18 @@ class Field:
             cell.append(creature_instance)
         else:
             # Creates a list if the cell is already occupied by one creature
-            cell = [cell].append(creature_instance)
+            cell_list = list()
+            cell_list.append(cell)
+            cell_list.append(creature_instance)
+            self.field_list[cell_position[0]][cell_position[1]] = cell_list
 
     def leave_cell(self, cell_position, creature_instance):
         """Removes a Creature instance from particular cell by position"""
         cell = self.field_list[cell_position[0]][cell_position[1]]
-        if cell == creature_instance:
+        if cell is creature_instance:
             # Sets None if there is only the Creature instance
             cell = None
-        elif type(cell) == list:
+        elif type(cell) is list:
             # Removes from a list if there is more than one Creature instance
             cell.remove(creature_instance)
 
@@ -206,6 +209,8 @@ class Position:
         try:
             self.field.field_list[new_coordinates[0]][new_coordinates[1]]
         except IndexError:
+            print('Field expanded')
+            sleep(5)
             self.field.expand()
 
         # Changes position if an Animal instance relocates
@@ -291,8 +296,6 @@ class Creature:
 
     def die(self):
         """Emulates death of the creature instance. Deletes the creature instance and clear occupied cells"""
-        for coordinates in self.position.coordinates_list:
-            self.field.leave_cell(coordinates, self)
         try:
             self.creatures.remove(self)
         except ValueError:
@@ -310,6 +313,7 @@ class Animal(Creature):
         self.sex = bool(np.random.randint(0, 2))
         self.hunger = 0
         self.hp = 100
+        self.hit = np.random.randint(15, 45)
         self.speed = int(self.hp/20)
         self.surroundings = list()
 
@@ -394,7 +398,7 @@ class Carnivore(Animal):
                 animal_instance.die()
             else:
                 print(f'{self} lost')
-                self.hp -= np.random.randint(0, self.hp)
+                self.hp -= animal_instance.hit
         elif (type(animal_instance) is Omnivore) or (type(animal_instance) is Carnivore):
             # Sets win probability for the attacking carnivore based on mass and aggressiveness
             attacker_win_probability = np.random.randint(0, 100) + self.mass*0.3 + self.aggressiveness * 0.2
@@ -409,7 +413,7 @@ class Carnivore(Animal):
             else:
                 print(f'{self} lost')
                 animal_instance.hunger = 0
-                animal_instance += 0.5 * self.mass
+                animal_instance.mass += 0.5 * self.mass
                 self.die()
 
     def reproduce(self):
@@ -568,10 +572,10 @@ class Omnivore(Animal):
                 self.mass += 0.5 * animal_instance.mass
             else:
                 print(f'{self} lost')
-                self.hp -= np.random.randint(0, self.hp)
+                self.hp -= animal_instance.hit
         elif (type(animal_instance) is Omnivore) or (type(animal_instance) is Carnivore):
-            # Sets win probability for the attacking carnivore based on mass and aggressiveness
-            attacker_win_probability = np.random.randint(0, 100) + self.mass*0.3 + self.aggressiveness * 0.2
+            # Sets win probability for the attacking carnivore based on mas
+            attacker_win_probability = np.random.randint(0, 100) + self.mass*0.5
             # Sets win probability for the defending animal based on mass (increased mass parameter)
             defender_win_probability = np.random.randint(0, 100) + self.mass*0.5
 
@@ -583,21 +587,24 @@ class Omnivore(Animal):
             else:
                 print(f'{self} lost')
                 animal_instance.hunger = 0
-                animal_instance += 0.5 * self.mass
+                animal_instance.mass += 0.5 * self.mass
                 self.die()
 
     def reproduce(self):
+        tumbler = False
         for coordinates in self.position.coordinates_list:
-            print(type(self.field.field_list[coordinates[0]][coordinates[1]]))
-            sleep(1)
+            if tumbler:
+                break
             if type(self.field.field_list[coordinates[0]][coordinates[1]]) is list:
                 for creature in self.field.field_list[coordinates[0]][coordinates[1]]:
                     same_type = type(creature) is type(self)
                     if same_type:
-                        sufficient_age = (creature.age >= 20) and (self.age >= 20)
+                        sufficient_age = (creature.age >= 30) and (self.age >= 30)
                         different_sex = creature.sex is not self.sex
                         if sufficient_age and different_sex:
                             self.create_child(coordinates)
+                            tumbler = True
+                            break
                     else:
                         pass
             else:
